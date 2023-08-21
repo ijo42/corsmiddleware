@@ -34,7 +34,7 @@ func TestStaticDomainSuccess(t *testing.T) {
 	var conf *corsmiddleware.Config
 	var err error
 
-	setupTest := func(tb testing.TB) {
+	setupTest := func(_ testing.TB) {
 		conf = corsmiddleware.CreateConfig()
 		req, err = http.NewRequestWithContext(ctx, http.MethodOptions, "https://localhost", nil)
 		if err != nil {
@@ -84,7 +84,7 @@ func TestWildcardDomainSuccess(t *testing.T) {
 	conf := corsmiddleware.CreateConfig()
 	conf.AllowOrigins = allowOrigins
 
-	setupTest := func(tb testing.TB) {
+	setupTest := func(_ testing.TB) {
 		req, err = http.NewRequestWithContext(ctx, http.MethodOptions, "http://localhost", nil)
 		if err != nil {
 			t.Fatal(err)

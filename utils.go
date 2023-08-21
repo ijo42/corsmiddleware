@@ -1,4 +1,3 @@
-// Package corsmiddleware.
 package corsmiddleware
 
 import (

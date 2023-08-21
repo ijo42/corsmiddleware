@@ -1,3 +1,4 @@
+// Package corsmiddleware plugin.
 package corsmiddleware
 
 import (
@@ -15,12 +16,12 @@ var defaultAllowHeaders = []string{
 
 // Config the plugin configuration.
 type Config struct {
-	AllowCredentials bool     `json:"allow_credentials,omitempty"`
-	AllowOrigins     []string `json:"allow_origins,omitempty"`
-	AllowMethods     []string `json:"allow_methods,omitempty"`
-	AllowHeaders     []string `json:"allow_headers,omitempty"`
-	ExposeHeaders    []string `json:"expose_headers,omitempty"`
-	MaxAge           int64    `json:"max_age,omitempty"`
+	AllowCredentials bool     `json:"allowCredentials,omitempty"`
+	AllowOrigins     []string `json:"allowOrigins,omitempty"`
+	AllowMethods     []string `json:"allowMethods,omitempty"`
+	AllowHeaders     []string `json:"allowHeaders,omitempty"`
+	ExposeHeaders    []string `json:"exposeHeaders,omitempty"`
+	MaxAge           int64    `json:"maxAge,omitempty"`
 }
 
 // CreateConfig creates the default plugin configuration.
@@ -50,7 +51,7 @@ type CORS struct {
 }
 
 // New created a new Demo plugin.
-func New(ctx context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
+func New(_ context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
 	var err error
 
 	var origins []*regexp.Regexp
