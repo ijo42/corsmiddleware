@@ -8,9 +8,12 @@ import (
 	"strings"
 )
 
-var DefaultAllowHeaders []string = []string{"Content-Type", "Content-Length",
-	"Accept-Encoding", "Authorization", "Accept", "Origin", "Referer", "Cache-Control"}
+var defaultAllowHeaders = []string{
+	"Content-Type", "Content-Length",
+	"Accept-Encoding", "Authorization", "Accept", "Origin", "Referer", "Cache-Control",
+}
 
+// Config the plugin configuration.
 type Config struct {
 	AllowCredentials bool     `json:"allow_credentials,omitempty"`
 	AllowOrigins     []string `json:"allow_origins,omitempty"`
@@ -20,6 +23,7 @@ type Config struct {
 	MaxAge           int64    `json:"max_age,omitempty"`
 }
 
+// CreateConfig creates the default plugin configuration.
 func CreateConfig() *Config {
 	return &Config{
 		AllowCredentials: false,
@@ -31,6 +35,7 @@ func CreateConfig() *Config {
 	}
 }
 
+// CORS structure for plugin execution.
 type CORS struct {
 	next        http.Handler
 	name        string
@@ -44,13 +49,14 @@ type CORS struct {
 	age int64
 }
 
+// New created a new Demo plugin.
 func New(ctx context.Context, next http.Handler, config *Config, name string) (http.Handler, error) {
 	var err error
 
 	var origins []*regexp.Regexp
 
 	if Contains(config.AllowOrigins, "*") {
-		all, _ := regexp.Compile(".*")
+		all := regexp.MustCompile(".*")
 		origins = []*regexp.Regexp{all}
 	} else {
 		origins, err = CompileOrigins(config.AllowOrigins)
@@ -59,7 +65,7 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 		}
 	}
 
-	headers := MergeAndUniques(DefaultAllowHeaders, config.AllowHeaders)
+	headers := MergeAndUniques(defaultAllowHeaders, config.AllowHeaders)
 
 	return &CORS{
 		next: next,
@@ -75,8 +81,7 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 }
 
 func (c *CORS) ServeHTTP(res http.ResponseWriter, req *http.Request) {
-
-	if req.Method != "OPTIONS" {
+	if req.Method != http.MethodOptions {
 		c.next.ServeHTTP(res, req)
 		return
 	}
@@ -98,5 +103,4 @@ func (c *CORS) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Access-Control-Allow-Methods", strings.Join(c.methods, ", "))
 	res.Header().Set("Access-Control-Max-Age", strconv.FormatInt(c.age, 10))
 	res.WriteHeader(http.StatusNoContent)
-
 }

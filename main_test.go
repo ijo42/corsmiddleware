@@ -3,16 +3,16 @@ package corsmiddleware_test
 import (
 	"context"
 	"fmt"
-	"gotest.tools/assert"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/SergioFloresG/corsmiddleware"
+	"gotest.tools/assert"
 )
 
 func TestStaticDomainSuccess(t *testing.T) {
-	var testCases = []struct {
+	testCases := []struct {
 		domain string
 		origin string
 	}{
@@ -61,12 +61,11 @@ func TestStaticDomainSuccess(t *testing.T) {
 			assert.Equal(t, recorder.Header().Get("Access-Control-Allow-Origin"), tc.domain)
 		})
 	}
-
 }
 
 func TestWildcardDomainSuccess(t *testing.T) {
-	var allowOrigins = []string{"https://*.foo.com", "https://*.example.com", "https://localhost"}
-	var testCases = []string{
+	allowOrigins := []string{"https://*.foo.com", "https://*.example.com", "https://localhost"}
+	testCases := []string{
 		"https://localhost",
 		"https://bar.foo.com",
 		"https://loop.foo.com",
@@ -123,5 +122,4 @@ func TestWildcardDomainSuccess(t *testing.T) {
 			testHelper(t, tc)
 		})
 	}
-
 }
