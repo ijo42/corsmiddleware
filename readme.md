@@ -1,7 +1,5 @@
-This repository includes an example plugin, `demo`, for you to use as a reference for developing your own plugins.
-
-[![Main](https://github.com/SergioFloresG/pantrypath/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/SergioFloresG/traefik-cors-middleware/actions/workflows/main.yml)
-[![Matrix](https://github.com/SergioFloresG/pantrypath/actions/workflows/go-cross.yml/badge.svg?branch=master)](https://github.com/SergioFloresG/traefik-cors-middleware/actions/workflows/go-cross.yml)
+[![Main](https://github.com/SergioFloresG/corsmiddleware/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/SergioFloresG/traefik-cors-middleware/actions/workflows/main.yml)
+[![Matrix](https://github.com/SergioFloresG/corsmiddleware/actions/workflows/go-cross.yml/badge.svg?branch=master)](https://github.com/SergioFloresG/traefik-cors-middleware/actions/workflows/go-cross.yml)
 
 The existing plugins can be browsed into the [Plugin Catalog](https://plugins.traefik.io).
 
@@ -34,7 +32,7 @@ Cache-Control
 experimental:
   plugins:
     example:
-      moduleName: github.com/SergioFloresG/traefik-cors-middleware
+      moduleName: github.com/SergioFloresG/corsmiddleware
       version: v0.1.0
 ```
 

@@ -9,11 +9,6 @@ import (
 	"strings"
 )
 
-var defaultAllowHeaders = []string{
-	"Content-Type", "Content-Length",
-	"Accept-Encoding", "Authorization", "Accept", "Origin", "Referer", "Cache-Control",
-}
-
 // Config the plugin configuration.
 type Config struct {
 	AllowCredentials bool     `json:"allowCredentials,omitempty"`
@@ -64,6 +59,11 @@ func New(_ context.Context, next http.Handler, config *Config, name string) (htt
 		if err != nil {
 			return nil, err
 		}
+	}
+
+	defaultAllowHeaders := []string{
+		"Content-Type", "Content-Length",
+		"Accept-Encoding", "Authorization", "Accept", "Origin", "Referer", "Cache-Control",
 	}
 
 	headers := MergeAndUniques(defaultAllowHeaders, config.AllowHeaders)

@@ -2,7 +2,7 @@ displayName: CORS Support
 type: middleware
 
 iconPath: .assets/icon.jpg
-import: github.com/SergioFloresG/traefik-cors-middleware
+import: github.com/SergioFloresG/corsmiddleware
 
 summary: "Middleware adding CORS request support"
 
