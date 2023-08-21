@@ -31,8 +31,8 @@ func Contains[T comparable](s []T, e T) bool {
 }
 
 // MergeAndUniques merge slices whit uniques values.
-func MergeAndUniques[T comparable](slices ...[]T) []T {
-	var input []T
+func MergeAndUniques(slices ...[]string) []string {
+	var input []string
 
 	for _, chunk := range slices {
 		input = append(input, chunk...)
