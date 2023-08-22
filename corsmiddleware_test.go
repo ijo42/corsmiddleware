@@ -8,7 +8,6 @@ import (
 	"testing"
 
 	"github.com/SergioFloresG/corsmiddleware"
-	"gotest.tools/assert"
 )
 
 func TestStaticDomainSuccess(t *testing.T) {
@@ -57,8 +56,8 @@ func TestStaticDomainSuccess(t *testing.T) {
 
 			handler.ServeHTTP(recorder, req)
 
-			assert.Equal(t, recorder.Code, http.StatusNoContent)
-			assert.Equal(t, recorder.Header().Get("Access-Control-Allow-Origin"), tc.domain)
+			assertEqual(t, recorder.Code, http.StatusNoContent)
+			assertEqual(t, recorder.Header().Get("Access-Control-Allow-Origin"), tc.domain)
 		})
 	}
 }
@@ -103,8 +102,8 @@ func TestWildcardDomainSuccess(t *testing.T) {
 
 		handler.ServeHTTP(recorder, req)
 
-		assert.Equal(t, recorder.Code, http.StatusNoContent)
-		assert.Equal(t, recorder.Header().Get("Access-Control-Allow-Origin"), originDomain)
+		assertEqual(t, recorder.Code, http.StatusNoContent)
+		assertEqual(t, recorder.Header().Get("Access-Control-Allow-Origin"), originDomain)
 	}
 
 	for _, tc := range testCases {
@@ -121,5 +120,12 @@ func TestWildcardDomainSuccess(t *testing.T) {
 			setupTest(t)
 			testHelper(t, tc)
 		})
+	}
+}
+
+func assertEqual(t *testing.T, value, expected interface{}) {
+	t.Helper()
+	if value != expected {
+		t.Errorf("assertion failed: %[1]v (%[1]T) != %[2]v (%[2]T)", value, expected)
 	}
 }
