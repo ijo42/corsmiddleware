@@ -2,6 +2,7 @@ package corsmiddleware
 
 import (
 	"fmt"
+	"os"
 	"regexp"
 	"strings"
 )
@@ -65,6 +66,13 @@ func AllowOrigin(origins []*regexp.Regexp, origin string) bool {
 			return true
 		}
 	}
-
 	return false
+}
+
+// WriteLogLine write plugin log
+func WriteLogLine(name string, message string) {
+	if strings.HasSuffix(message, "\n") {
+		message = strings.Trim(message, "\n")
+	}
+	_, _ = os.Stdout.WriteString(fmt.Sprintf("corsmiddleware:[%v]> %v\n", name, message))
 }

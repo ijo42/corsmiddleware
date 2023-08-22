@@ -65,8 +65,12 @@ func New(_ context.Context, next http.Handler, config *Config, name string) (htt
 		"Content-Type", "Content-Length",
 		"Accept-Encoding", "Authorization", "Accept", "Origin", "Referer", "Cache-Control",
 	}
+	defaultExposeHeaders := []string{
+		"Content-Type", "Content-Length",
+	}
 
 	headers := MergeAndUniques(defaultAllowHeaders, config.AllowHeaders)
+	exposed := MergeAndUniques(defaultExposeHeaders, config.ExposeHeaders)
 
 	return &CORS{
 		next: next,
@@ -75,36 +79,34 @@ func New(_ context.Context, next http.Handler, config *Config, name string) (htt
 		origins:     origins,
 		headers:     headers,
 		methods:     config.AllowMethods,
-		exposed:     config.ExposeHeaders,
+		exposed:     exposed,
 		age:         config.MaxAge,
 		credentials: config.AllowCredentials,
 	}, nil
 }
 
 func (c *CORS) ServeHTTP(res http.ResponseWriter, req *http.Request) {
-	if req.Method != http.MethodOptions {
+	origin := req.Header.Get("Origin")
+	if origin == "" || !AllowOrigin(c.origins, origin) {
 		c.next.ServeHTTP(res, req)
 		return
 	}
 
-	origin := req.Header.Get("Origin")
-	if origin == "" {
-		http.Error(res, "No `Origin` header received", http.StatusBadRequest)
-		return
-	}
-
-	if !AllowOrigin(c.origins, origin) {
-		// Response is sent without headers as cors is not allowed.
+	if req.Method == http.MethodOptions {
+		c.injectOrigin(res, origin)
+		res.Header().Set("Access-Control-Allow-Methods", strings.Join(c.methods, ", "))
+		res.Header().Set("Access-Control-Max-Age", strconv.FormatInt(c.age, 10))
 		res.WriteHeader(http.StatusNoContent)
 		return
 	}
 
+	c.next.ServeHTTP(res, req)
+	c.injectOrigin(res, origin)
+}
+
+func (c *CORS) injectOrigin(res http.ResponseWriter, origin string) {
 	res.Header().Set("Access-Control-Allow-Origin", origin)
 	res.Header().Set("Access-Control-Allow-Credentials", strconv.FormatBool(c.credentials))
 	res.Header().Set("Access-Control-Allow-Headers", strings.Join(c.headers, ", "))
-	res.Header().Set("Access-Control-Allow-Methods", strings.Join(c.methods, ", "))
-	res.Header().Set("Access-Control-Max-Age", strconv.FormatInt(c.age, 10))
-	res.WriteHeader(http.StatusNoContent)
-
-	c.next.ServeHTTP(res, req)
+	res.Header().Set("Access-Control-Expose-Headers", strings.Join(c.exposed, ", "))
 }
