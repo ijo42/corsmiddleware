@@ -11,14 +11,14 @@ Use this middleware to add CORS support to the necessary endpoints, indicating t
 
 Requirements: Traefik >= v2.5.5
 
-| Option              | Description                                                                                                                                         | Header                                                                                                                         |
-|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| `allow_credentials` | This indicates whether or not the actual request can be made using credentials.<br/>_(default: `false`)_                                            | [Access Control Allow Credentials](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials) | 
-| `allow_origins`     | Indicates the group of sources that have access to the requesting resource.<br/>_(default: `*`)_                                                    | [Access Control Allow Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)           |
-| `allow_methods`     | Specifies one or more methods allowed when accessing a resource in response.<br/>_(default: `OPTIONS`, `GET`, `POST`, `PUT`, `DELETE`)_             | [Access Control Allow Methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods)         |
-| `allow_headers`     | Indicate which HTTP headers can be used during the actual request. the indicated headers are an addition to [default ones](#allow_headers_defaults) | [Access Control Allow Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers)         |
-| `expose_headers`    | Indicate which response headers should be made available to scripts running in the browser, in response to a cross-origin request.                  | [Access Control Expose Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers)       |
-| `max_age`:          | Indicates how long the results of a preflight request can be cached <br/>_(default: `86400`)_                                                      | [Access Control Max Age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Max-Age)                     |
+| Option             | Description                                                                                                                                         | Header                                                                                                                         |
+|--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| `allowCredentials` | This indicates whether or not the actual request can be made using credentials.<br/>_(default: `false`)_                                            | [Access Control Allow Credentials](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials) | 
+| `allowOrigins`     | Indicates the group of sources that have access to the requesting resource.<br/>_(default: `*`)_                                                    | [Access Control Allow Origin](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)           |
+| `allowMethods`     | Specifies one or more methods allowed when accessing a resource in response.<br/>_(default: `OPTIONS`, `GET`, `POST`, `PUT`, `DELETE`)_             | [Access Control Allow Methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Methods)         |
+| `allowHeaders`     | Indicate which HTTP headers can be used during the actual request. the indicated headers are an addition to [default ones](#allow_headers_defaults) | [Access Control Allow Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers)         |
+| `exposeHeaders`    | Indicate which response headers should be made available to scripts running in the browser, in response to a cross-origin request.                  | [Access Control Expose Headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers)       |
+| `maxAge`:          | Indicates how long the results of a preflight request can be cached <br/>_(default: `86400`)_                                                      | [Access Control Max Age](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Max-Age)                     |
 
 <a name="allow_headers_defaults"></a>
 **Default Allow Headers**: Content-Type, Content-Length, Accept-Encoding, Authorization, Accept, Origin, Referer,
@@ -62,5 +62,5 @@ http:
     my-cors-middleware:
       plugin:
         corsmiddleware:
-          allow_origins: ["https://example.com"]
+          allowOrigins: ["https://example.com"]
 ```
