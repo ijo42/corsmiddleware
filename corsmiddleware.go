@@ -96,6 +96,7 @@ func (c *CORS) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	if !AllowOrigin(c.origins, origin) {
 		// Response is sent without headers as cors is not allowed.
 		res.WriteHeader(http.StatusNoContent)
+		return
 	}
 
 	res.Header().Set("Access-Control-Allow-Origin", origin)
@@ -104,4 +105,6 @@ func (c *CORS) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Access-Control-Allow-Methods", strings.Join(c.methods, ", "))
 	res.Header().Set("Access-Control-Max-Age", strconv.FormatInt(c.age, 10))
 	res.WriteHeader(http.StatusNoContent)
+
+	c.next.ServeHTTP(res, req)
 }
