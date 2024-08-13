@@ -1,3 +1,6 @@
+# Patch for https://github.com/SergioFloresG/corsmiddleware/pull/2
+
+
 [![Main](https://github.com/SergioFloresG/corsmiddleware/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/SergioFloresG/traefik-cors-middleware/actions/workflows/main.yml)
 [![Matrix](https://github.com/SergioFloresG/corsmiddleware/actions/workflows/go-cross.yml/badge.svg?branch=master)](https://github.com/SergioFloresG/traefik-cors-middleware/actions/workflows/go-cross.yml)
 

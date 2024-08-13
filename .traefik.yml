@@ -1,8 +1,8 @@
-displayName: CORS Support
+displayName: CORS Support PATCH
 type: middleware
 
 iconPath: .assets/icon.jpg
-import: github.com/SergioFloresG/corsmiddleware
+import: github.com/ijo42/corsmiddleware
 
 summary: "Middleware adding CORS request support"
 

@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/SergioFloresG/corsmiddleware"
+	"github.com/ijo42/corsmiddleware"
 )
 
 func TestStaticDomainSuccess(t *testing.T) {
