@@ -100,6 +100,7 @@ func (c *CORS) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	req.Header.Del("Origin")
 	c.injectOrigin(res, origin)
 	c.next.ServeHTTP(res, req)
 }
